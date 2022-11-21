@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --grid-color: rgba(150, 150, 150, 1);
 
@@ -23,9 +27,9 @@ code {
 
   /* Defaults for testing */
   --cols: 10;
-  --rows: 18;
+  --rows: 10;
   --tile-size: 20px;
-  --border-width: 5px;
+  --border-width: 1px;
 }
 
 /* Grid Square CSS */
@@ -38,4 +42,12 @@ code {
   border-top-color: var(--border-top-color);
   border-right-color: var(--border-right-color);
   border-bottom-color: var(--border-bottom-color);
+}
+
+/* Grid Board CSS */
+.grid-board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  grid-gap: 0;
+  align-self: flex-start;
 }

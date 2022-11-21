@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import Square from './Components/Square'
+import Board from './Components/Board';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <h1 className='App-title'>Maze Routes</h1>
       </header>
-      <Square />
+      <Board />
     </div>
   );
 }
