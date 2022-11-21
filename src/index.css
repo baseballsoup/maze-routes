@@ -44,10 +44,41 @@ code {
   border-bottom-color: var(--border-bottom-color);
 }
 
+.no-border-left {
+  border-left: none;
+}
+
+.no-border-right {
+  border-right: none;
+}
+
+.no-border-top {
+  border-top: none;
+}
+
+.no-border-bottom {
+  border-bottom: none;
+}
+
 /* Grid Board CSS */
 .grid-board {
   display: grid;
   grid-template-columns: repeat(var(--cols), var(--tile-size));
   grid-gap: 0;
   align-self: flex-start;
+}
+
+/* Controls CSS */
+.controls {
+  display: flex;
+  flex-direction: row;
+}
+
+.control-button {
+  --size: calc(var(--tile-size) * 2.5);
+  width: var(--size);
+  height: var(--size);
+  text-align: center;
+  display: block;
+  border-width: 1px;
 }
