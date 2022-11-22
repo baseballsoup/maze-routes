@@ -6,14 +6,14 @@ import Square from "./Square";
 class Board extends React.Component {
     render() {
         const board = [];
-        let borders = 'no-border-right no-border-left'
+        let borders = '';
 
         // Iterate through 10 rows
-        for (let row = 0; row < 10; row++) {
+        for (let row = 0; row < 30; row++) {
             board.push([])
 
             // Add 10 columns per row
-            for (let col = 0; col < 10; col++) {
+            for (let col = 0; col < 30; col++) {
                 let id = row + ',' + col;
                 board[row].push(<Square id={id} borders={borders} />);
             }

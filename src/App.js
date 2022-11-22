@@ -11,9 +11,9 @@ function App() {
         <h1 className='App-title'>Maze Routes</h1>
       </header>
       <br></br>
-      <Board />
+      <Board size='30' />
       <br></br>
-      <Controls />
+      <Controls size='30' />
     </div>
   );
 }

@@ -26,8 +26,8 @@ code {
   --border-bottom-color: black;
 
   /* Defaults for testing */
-  --cols: 10;
-  --rows: 10;
+  --cols: 30;
+  --rows: 30;
   --tile-size: 20px;
   --border-width: 1px;
 }
