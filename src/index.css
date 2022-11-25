@@ -26,8 +26,7 @@ code {
   --border-bottom-color: black;
 
   /* Defaults for testing */
-  --cols: 30;
-  --rows: 30;
+  --rows-cols: 20;
   --tile-size: 20px;
   --border-width: 1px;
 }
@@ -62,10 +61,12 @@ code {
 
 /* Grid Board CSS */
 .grid-board {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), var(--tile-size));
   grid-gap: 0;
   align-self: flex-start;
+}
+
+.grid-row {
+  display: flex;
 }
 
 /* Controls CSS */
