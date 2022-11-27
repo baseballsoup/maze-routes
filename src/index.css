@@ -26,7 +26,6 @@ code {
   --border-bottom-color: black;
 
   /* Defaults for testing */
-  --rows-cols: 20;
   --tile-size: 20px;
   --border-width: 1px;
 }
@@ -57,6 +56,10 @@ code {
 
 .no-border-bottom {
   border-bottom: none;
+}
+
+.visited {
+  background-color: deepskyblue;
 }
 
 /* Grid Board CSS */
