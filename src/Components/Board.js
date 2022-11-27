@@ -14,7 +14,7 @@ class Board extends React.Component {
         this.DROW = [-1, 1, 0, 0];
         this.DCOL = [0, 0, 1, -1];
         this.OPPOSITE = [1, 0, 3, 2];
-        this.speed = 20;
+        this.speed = 100;
         this.timesTicked = 0;
         this.queue = [];
     }
@@ -64,6 +64,9 @@ class Board extends React.Component {
     }
 
     generate_maze() {
+        clearInterval(this.timerID);
+        this.timerID = false;
+
         this.timerID = setInterval(
             () => this.carve_next_passage(),
             this.speed
@@ -73,13 +76,13 @@ class Board extends React.Component {
 
     carve_next_passage() {
         this.timesTicked++;
-        console.log("Times ticked: " + this.timesTicked);
+        //console.log("Times ticked: " + this.timesTicked);
 
         if (this.queue.length == 0) {
 
             // Initialize Queue
             if (this.timesTicked == 1) {
-                console.log("Initial Call");
+                //console.log("Initial Call");
                 // Choose initial cell
                 let startX = 0;
                 let startY = 0;
@@ -94,18 +97,21 @@ class Board extends React.Component {
             // Empty queue means the maze is done being generated
             else {
                 console.log("Done with Maze generating");
+                this.remove_is_current(0, 0);
                 clearInterval(this.timerID);
+                this.timerID = false;
                 this.timesTicked = 0;
             }
         }
 
-        if (this.queue.length != 0) {
+        else {
             // Pop Cell from stack
             let currentCell = this.queue.pop();
             let currentX = currentCell['x'];
             let currentY = currentCell['y'];
+            this.remove_is_current(currentX, currentY);
 
-            //console.log("Current Cell" + currentX + ',' + currentY);
+            console.log("Current Cell" + currentX + ',' + currentY);
 
             let neighbors = this.get_unvisited_neighbors(currentX, currentY);
 
@@ -127,7 +133,17 @@ class Board extends React.Component {
 
                 // Mark the chosen cell as visited and push to stack
                 this.set_is_visited(nextX, nextY);
+                this.set_is_current(nextX, nextY);
                 this.add_to_queue(nextX, nextY);
+                console.log("Next Cell" + nextX + ',' + nextY);
+            }
+            else {
+                //Set current to next item in the queue
+                if (this.queue.length > 0) {
+                    let nextInQueue = this.queue.at(-1);
+                    this.set_is_current(nextInQueue['x'], nextInQueue['y']);
+                    console.log("Next Cell" + nextInQueue['x'] + ',' + nextInQueue['y']);
+                }
             }
         }
     }
@@ -168,6 +184,28 @@ class Board extends React.Component {
 
         if (!tempSquare['borders'].includes('visited')) {
             tempSquare['borders'].push('visited');
+        }
+    }
+
+    set_is_current(x, y) {
+        let tempBoard = this.state.board;
+        let tempBorders = tempBoard[x][y]['borders'];
+
+        if (!tempBorders.includes('current')) {
+            tempBorders.push('current');
+            this.setState({ board: tempBoard });
+        }
+    }
+
+    remove_is_current(x, y) {
+        let tempBoard = this.state.board;
+        let tempBorders = tempBoard[x][y]['borders'];
+
+        if (tempBorders.includes('current')) {
+            let index = tempBorders.indexOf('current');
+
+            tempBorders.splice(index, 1);
+            this.setState({ board: tempBoard });
         }
     }
 
@@ -216,6 +254,7 @@ class Board extends React.Component {
 
         // Reset iteration variables
         clearInterval(this.timerID);
+        this.timerID = false;
         this.timesTicked = 0;
 
         // Iterate through 10 rows
