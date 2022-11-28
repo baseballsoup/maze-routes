@@ -14,30 +14,15 @@ class Board extends React.Component {
         this.DROW = [-1, 1, 0, 0];
         this.DCOL = [0, 0, 1, -1];
         this.OPPOSITE = [1, 0, 3, 2];
-        this.speed = 100;
+        this.speed = 30;
         this.timesTicked = 0;
         this.queue = [];
+        this.size = this.props.size;
     }
 
     componentDidMount() {
-        let tempBoard = [];
-        let size = this.props.size;
-
-        // Iterate through 10 rows
-        for (let row = 0; row < size; row++) {
-            tempBoard.push([]);
-
-            // Add 10 columns per row
-            for (let col = 0; col < size; col++) {
-                let id = row + ',' + col;
-                tempBoard[row].push({
-                    'id': id,
-                    'borders': ['grid-square']
-                });
-            }
-        }
-
-        this.setState({ board: tempBoard });
+        //console.log("Initial size => " + this.size);
+        this.resetMaze(this.size);
     }
 
     componentWillUnmount() {
@@ -52,7 +37,7 @@ class Board extends React.Component {
             let newX = x + this.DROW[direction];
             let newY = y + this.DCOL[direction];
 
-            if ((newY >= 0 && newY < this.props.size) && (newX >= 0 && newX < this.props.size) && !this.getIsVisited(newX, newY)) {
+            if ((newY >= 0 && newY < this.size) && (newX >= 0 && newX < this.size) && !this.getIsVisited(newX, newY)) {
                 this.carve_wall(x, y, direction);
                 this.carve_wall(newX, newY, this.OPPOSITE[direction]);
                 //console.log('---------');
@@ -64,8 +49,7 @@ class Board extends React.Component {
     }
 
     generate_maze() {
-        clearInterval(this.timerID);
-        this.timerID = false;
+        this.resetTimerInterval();
 
         this.timerID = setInterval(
             () => this.carve_next_passage(),
@@ -111,7 +95,7 @@ class Board extends React.Component {
             let currentY = currentCell['y'];
             this.remove_is_current(currentX, currentY);
 
-            console.log("Current Cell" + currentX + ',' + currentY);
+            console.log("Current Cell => " + currentX + ',' + currentY);
 
             let neighbors = this.get_unvisited_neighbors(currentX, currentY);
 
@@ -156,7 +140,7 @@ class Board extends React.Component {
             let newX = x + this.DROW[direction];
             let newY = y + this.DCOL[direction];
 
-            if ((newY >= 0 && newY < this.props.size) && (newX >= 0 && newX < this.props.size) && !this.get_is_visited(newX, newY)) {
+            if ((newY >= 0 && newY < this.size) && (newX >= 0 && newX < this.size) && !this.get_is_visited(newX, newY)) {
                 neighbors.push({ 'x': newX, 'y': newY, 'direction': direction });
             }
         }
@@ -248,21 +232,21 @@ class Board extends React.Component {
         }
     }
 
-    resetMaze() {
+    resetMaze(size) {
         let tempBoard = [];
-        let size = this.props.size;
+        this.size = size;
+        this.queue = [];
+        console.log("Size in reset maze => " + this.size);
 
         // Reset iteration variables
-        clearInterval(this.timerID);
-        this.timerID = false;
-        this.timesTicked = 0;
+        this.resetTimerInterval();
 
         // Iterate through 10 rows
-        for (let row = 0; row < size; row++) {
+        for (let row = 0; row < this.size; row++) {
             tempBoard.push([]);
 
             // Add 10 columns per row
-            for (let col = 0; col < size; col++) {
+            for (let col = 0; col < this.size; col++) {
                 let id = row + ',' + col;
                 tempBoard[row].push({
                     'id': id,
@@ -272,6 +256,12 @@ class Board extends React.Component {
         }
 
         this.setState({ board: tempBoard });
+    }
+
+    resetTimerInterval() {
+        clearInterval(this.timerID);
+        this.timerID = false;
+        this.timesTicked = 0;
     }
 
     render() {
