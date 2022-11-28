@@ -14,10 +14,11 @@ class Board extends React.Component {
         this.DROW = [-1, 1, 0, 0];
         this.DCOL = [0, 0, 1, -1];
         this.OPPOSITE = [1, 0, 3, 2];
-        this.speed = 30;
         this.timesTicked = 0;
+        this.timerID = false;
         this.queue = [];
         this.size = this.props.size;
+        this.speed = this.props.speed;
     }
 
     componentDidMount() {
@@ -50,11 +51,7 @@ class Board extends React.Component {
 
     generate_maze() {
         this.resetTimerInterval();
-
-        this.timerID = setInterval(
-            () => this.carve_next_passage(),
-            this.speed
-        );
+        this.startTimerInterval();
     }
 
 
@@ -82,9 +79,7 @@ class Board extends React.Component {
             else {
                 console.log("Done with Maze generating");
                 this.remove_is_current(0, 0);
-                clearInterval(this.timerID);
-                this.timerID = false;
-                this.timesTicked = 0;
+                this.resetTimerInterval();
             }
         }
 
@@ -119,14 +114,14 @@ class Board extends React.Component {
                 this.set_is_visited(nextX, nextY);
                 this.set_is_current(nextX, nextY);
                 this.add_to_queue(nextX, nextY);
-                console.log("Next Cell" + nextX + ',' + nextY);
+                //console.log("Next Cell => " + nextX + ',' + nextY);
             }
             else {
                 //Set current to next item in the queue
                 if (this.queue.length > 0) {
                     let nextInQueue = this.queue.at(-1);
                     this.set_is_current(nextInQueue['x'], nextInQueue['y']);
-                    console.log("Next Cell" + nextInQueue['x'] + ',' + nextInQueue['y']);
+                    //console.log("Next Cell => " + nextInQueue['x'] + ',' + nextInQueue['y']);
                 }
             }
         }
@@ -232,6 +227,15 @@ class Board extends React.Component {
         }
     }
 
+    changeSpeed(speed) {
+        this.speed = speed;
+
+        if (this.timerID != false) {
+            this.resetTimerInterval();
+            this.startTimerInterval();
+        }
+    }
+
     resetMaze(size) {
         let tempBoard = [];
         this.size = size;
@@ -262,6 +266,13 @@ class Board extends React.Component {
         clearInterval(this.timerID);
         this.timerID = false;
         this.timesTicked = 0;
+    }
+
+    startTimerInterval() {
+        this.timerID = setInterval(
+            () => this.carve_next_passage(),
+            this.speed
+        );
     }
 
     render() {
