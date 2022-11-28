@@ -4,7 +4,6 @@ import './App.css';
 import Board from './Components/Board';
 import { useRef, useState } from 'react';
 
-//TODO: Add slider input for speed
 //TODO: Edit formatting
 //TODO: Add solving algorithms
 
