@@ -10,6 +10,8 @@ class Board extends React.Component {
         this.state = {
             board: []
         };
+
+        //Initializing Constants and Configurations
         this.N = 0; this.S = 1; this.E = 2; this.W = 3;
         this.DROW = [-1, 1, 0, 0];
         this.DCOL = [0, 0, 1, -1];
@@ -21,14 +23,91 @@ class Board extends React.Component {
         this.speed = this.props.speed;
     }
 
+    /* Initialization and Rendering Functions */
     componentDidMount() {
-        //console.log("Initial size => " + this.size);
-        this.resetMaze(this.size);
+        this.resetMaze(this.props.size);
     }
 
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.size !== this.props.size) {
+            console.log("Update Size");
+            this.resetMaze(this.props.size);
+        }
+        if (prevProps.speed !== this.props.speed) {
+            console.log("Update Speed");
+            this.updateSpeed(this.props.speed);
+        }
+        if (prevProps.buttonClicked !== this.props.buttonClicked) {
+            if (this.props.buttonClicked === 'RUN') {
+                console.log("Begin Running");
+                this.generate_maze();
+            }
+            if (this.props.buttonClicked === 'RESET') {
+                console.log("Reset Clicked");
+                this.resetMaze(this.size);
+            }
+        }
+
+    }
+
+    /* ---- Button Action Functions ---- */
+    generate_maze() {
+        this.resetTimerInterval();
+        this.startTimerInterval();
+    }
+
+    updateSpeed(speed) {
+        this.speed = speed;
+
+        if (this.timerID != false) {
+            this.resetTimerInterval();
+            this.startTimerInterval();
+        }
+    }
+
+    resetMaze(size) {
+        let tempBoard = [];
+        this.size = size;
+        this.queue = [];
+
+        // Reset iteration variables
+        this.resetTimerInterval();
+
+        // Iterate through 10 rows
+        for (let row = 0; row < size; row++) {
+            tempBoard.push([]);
+
+            // Add 10 columns per row
+            for (let col = 0; col < size; col++) {
+                let id = row + ',' + col;
+                tempBoard[row].push({
+                    'id': id,
+                    'borders': ['grid-square']
+                });
+            }
+        }
+
+        this.setState({ board: tempBoard });
+    }
+
+    resetTimerInterval() {
+        clearInterval(this.timerID);
+        this.timerID = false;
+        this.timesTicked = 0;
+    }
+
+    startTimerInterval() {
+        this.timerID = setInterval(
+            () => this.carve_next_passage(),
+            this.speed
+        );
+    }
+
+    /* ---- Logic for Generating Maze (Backtracking algorithm) --- */
 
     carve_passages_from(x, y) {
         let directions = this.shuffle([this.N, this.S, this.E, this.W]);
@@ -48,12 +127,6 @@ class Board extends React.Component {
             }
         }
     }
-
-    generate_maze() {
-        this.resetTimerInterval();
-        this.startTimerInterval();
-    }
-
 
     carve_next_passage() {
         this.timesTicked++;
@@ -90,7 +163,7 @@ class Board extends React.Component {
             let currentY = currentCell['y'];
             this.remove_is_current(currentX, currentY);
 
-            console.log("Current Cell => " + currentX + ',' + currentY);
+            //console.log("Current Cell => " + currentX + ',' + currentY);
 
             let neighbors = this.get_unvisited_neighbors(currentX, currentY);
 
@@ -225,54 +298,6 @@ class Board extends React.Component {
             default:
                 break;
         }
-    }
-
-    changeSpeed(speed) {
-        this.speed = speed;
-
-        if (this.timerID != false) {
-            this.resetTimerInterval();
-            this.startTimerInterval();
-        }
-    }
-
-    resetMaze(size) {
-        let tempBoard = [];
-        this.size = size;
-        this.queue = [];
-        console.log("Size in reset maze => " + this.size);
-
-        // Reset iteration variables
-        this.resetTimerInterval();
-
-        // Iterate through 10 rows
-        for (let row = 0; row < this.size; row++) {
-            tempBoard.push([]);
-
-            // Add 10 columns per row
-            for (let col = 0; col < this.size; col++) {
-                let id = row + ',' + col;
-                tempBoard[row].push({
-                    'id': id,
-                    'borders': ['grid-square']
-                });
-            }
-        }
-
-        this.setState({ board: tempBoard });
-    }
-
-    resetTimerInterval() {
-        clearInterval(this.timerID);
-        this.timerID = false;
-        this.timesTicked = 0;
-    }
-
-    startTimerInterval() {
-        this.timerID = setInterval(
-            () => this.carve_next_passage(),
-            this.speed
-        );
     }
 
     render() {
