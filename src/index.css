@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F0F0F0;
+  color: #333;
 }
 
 code {
@@ -113,14 +115,13 @@ code {
   padding: 10px 20px;
   border: 1px solid #333;
   border-radius: 4px;
-  background-color: #fff;
-  color: #333;
+  background-color: #006699;
+  color: #FFFFFF;
   cursor: pointer;
 }
 
 .button:hover {
-  background-color: #333;
-  color: #fff;
+  background-color: #0099CC;
 }
 
 .slider {

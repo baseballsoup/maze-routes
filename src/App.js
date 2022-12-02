@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className='App-title'>Maze Routes</h1>
+        <h1 className='App-title'>Randomly Generate and Solve Mazes</h1>
       </header>
 
       <div className='main-container'>
