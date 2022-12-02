@@ -1,6 +1,6 @@
-import { wait } from "@testing-library/user-event/dist/utils";
 import React from "react";
 import Square from "./Square";
+import { MAX_DELAY } from "./constants";
 
 // Creates an X by X grid of squares
 
@@ -20,7 +20,7 @@ class Board extends React.Component {
         this.timerID = false;
         this.queue = [];
         this.size = this.props.size;
-        this.speed = this.props.speed;
+        this.speed = MAX_DELAY - this.props.speed;
     }
 
     /* Initialization and Rendering Functions */
@@ -61,7 +61,8 @@ class Board extends React.Component {
     }
 
     updateSpeed(speed) {
-        this.speed = speed;
+        this.speed = MAX_DELAY - speed;
+        console.log(this.speed);
 
         if (this.timerID != false) {
             this.resetTimerInterval();

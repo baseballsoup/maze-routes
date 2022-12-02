@@ -69,7 +69,6 @@ code {
 /* Grid Board CSS */
 .grid-board {
   grid-gap: 0;
-  align-self: flex-start;
 }
 
 .grid-row {
@@ -77,16 +76,76 @@ code {
 }
 
 /* Controls CSS */
-.controls {
+.controls-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.control-button {
-  --size: calc(var(--tile-size) * 2.5);
-  width: var(--size);
-  height: var(--size);
-  text-align: center;
-  display: block;
-  border-width: 1px;
+.main-container {
+  display: flex;
+  height: 80vh;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-row {
+  display: flex;
+  padding: 3vh;
+}
+
+.col-span-2 {
+  width: 50%;
+  /* Adjust this to change the column width */
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 20px;
+  background-color: #ddd;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #4caf50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #4caf50;
+  cursor: pointer;
 }
