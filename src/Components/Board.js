@@ -70,6 +70,29 @@ class Board extends React.Component {
         }
     }
 
+    updateSizeFormatting() {
+        // Get the width of the board container element
+        const container = document.querySelector('#grid-board');
+
+        // Check if the container element exists
+        if (container) {
+            // Get the smallest width of the container
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const size = Math.min(width, height);
+
+            // Update the tile sizes
+            const newSize = size / this.size;
+            document.documentElement.style.setProperty('--tile-size', `${newSize}px`);
+
+            // Output the width to the console
+            console.log(`The width of the container is ${width}px.`);
+        } else {
+            // Output an error message if the container does not exist
+            console.error('The container element does not exist.');
+        }
+    }
+
     resetMaze(size) {
         let tempBoard = [];
         this.size = size;
@@ -77,6 +100,9 @@ class Board extends React.Component {
 
         // Reset iteration variables
         this.resetTimerInterval();
+
+        // Update the size formatting of each square
+        this.updateSizeFormatting()
 
         // Iterate through 10 rows
         for (let row = 0; row < size; row++) {
@@ -303,7 +329,7 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div className='grid-board' >
+            <div id='grid-board' className='grid-board' >
                 {this.state.board.map((row, index) => {
                     return (
                         <div className='grid-row' key={index}>
