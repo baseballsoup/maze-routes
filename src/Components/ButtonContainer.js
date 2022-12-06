@@ -26,7 +26,13 @@ class ButtonContainer extends React.Component {
         return (
             <div className="controls-container">
                 <div className="flex-row">
-                    <label htmlFor="size-slider">Size:</label>
+                    <label className="label">Generate Maze</label>
+                </div>
+                <div className="flex-row">
+                    <label className="label">Solve Maze</label>
+                </div>
+                <div className="flex-row">
+                    <label className="label" htmlFor="size-slider">Size:</label>
                     <input
                         id="size-slider"
                         type="range"
@@ -37,9 +43,10 @@ class ButtonContainer extends React.Component {
                     />
                 </div>
                 <div className="flex-row">
-                    <label htmlFor="speed-slider">Speed:</label>
+                    <label className="label" htmlFor="speed-slider">Speed:</label>
                     <input
                         id="speed-slider"
+                        className="slider"
                         type="range"
                         min="0"
                         max={MAX_DELAY}

@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #F0F0F0;
+  background-color: var(--accent-color-1);
   color: #333;
 }
 
@@ -22,10 +22,17 @@ code {
   --grid-color: rgba(150, 150, 150, 1);
 
   /* Border Colors are all black. */
-  --border-left-color: black;
-  --border-top-color: black;
-  --border-right-color: black;
-  --border-bottom-color: black;
+  --border-left-color: var(--accent-color-2);
+  --border-top-color: var(--accent-color-2);
+  --border-right-color: var(--accent-color-2);
+  --border-bottom-color: var(--accent-color-2);
+
+  /* Color Schemes */
+  --main-color: #0b0c10;
+  --accent-color-1: #1f2833;
+  --accent-color-2: #c5c6c7;
+  --accent-color-3: #66fcf1;
+  --accent-color-4: #45a29e;
 
   /* Defaults for testing */
   --tile-size: 20px;
@@ -61,11 +68,11 @@ code {
 }
 
 .visited {
-  background-color: deepskyblue;
+  background-color: var(--accent-color-4);
 }
 
 .current {
-  background-color: darkblue;
+  background-color: var(--accent-color-3);
 }
 
 /* Grid Board CSS */
@@ -73,6 +80,8 @@ code {
   grid-gap: 0;
   height: 100%;
   width: 100%;
+  padding-top: 2%;
+  padding-inline-start: 10%;
 }
 
 .grid-row {
@@ -115,40 +124,17 @@ code {
 .button {
   display: inline-block;
   padding: 10px 20px;
-  border: 1px solid #333;
+  border: 1px solid var(--accent-color-2);
   border-radius: 4px;
-  background-color: #006699;
-  color: #FFFFFF;
+  background-color: var(--accent-color-4);
+  color: var(--accent-color-1);
   cursor: pointer;
 }
 
 .button:hover {
-  background-color: #0099CC;
+  background-color: var(--accent-color-3);
 }
 
-.slider {
-  -webkit-appearance: none;
-  width: 200px;
-  height: 20px;
-  background-color: #ddd;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background-color: #4caf50;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background-color: #4caf50;
-  cursor: pointer;
+.label {
+  color: var(--accent-color-3)
 }

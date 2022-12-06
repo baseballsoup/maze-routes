@@ -8,6 +8,15 @@
   pointer-events: none;
 }
 
+:root {
+  /* Color Schemes */
+  --main-color: #0b0c10;
+  --accent-color-1: #1f2833;
+  --accent-color-2: #c5c6c7;
+  --accent-color-3: #66fcf1;
+  --accent-color-4: #45a29e;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -15,7 +24,7 @@
 }
 
 .App-header {
-  background-color: #006690;
+  background-color: var(--main-color);
   min-height: 10vh;
   max-height: 20vh;
   display: flex;
@@ -23,11 +32,11 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: whitesmoke;
+  color: var(--accent-color-3);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--accent-color-4);
 }
 
 @keyframes App-logo-spin {
