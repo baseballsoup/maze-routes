@@ -1,6 +1,6 @@
 import React from "react";
 import Square from "./Square";
-import { MAX_DELAY } from "./constants";
+import { MIN_DELAY, MAX_DELAY } from "./constants";
 
 // Creates an X by X grid of squares
 
@@ -21,7 +21,7 @@ class Board extends React.Component {
         this.queue = [];
         this.size = this.props.size;
         this.cols = this.props.size * 2;
-        this.speed = MAX_DELAY - this.props.speed;
+        this.speed = MAX_DELAY - this.props.speed + MIN_DELAY;
     }
 
     /* Initialization and Rendering Functions */
@@ -65,7 +65,7 @@ class Board extends React.Component {
     }
 
     updateSpeed(speed) {
-        this.speed = MAX_DELAY - speed;
+        this.speed = MAX_DELAY - speed + MIN_DELAY;
         console.log(this.speed);
 
         if (this.timerID != false) {

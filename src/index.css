@@ -69,13 +69,13 @@ code {
 }
 
 .visited {
-  /* background-color: var(--accent-color-4); */
+  /*background-color: var(--accent-color-4); */
   border-width: 2px;
   opacity: 100%;
 }
 
 .current {
-  /* background-color: var(--accent-color-3); */
+  background-color: var(--accent-color-2);
 }
 
 /* Grid Board CSS */

@@ -1,7 +1,7 @@
 import './App.css';
 
 import Board from './Components/Board';
-import ButtonContainer from './Components/Header';
+import Header from './Components/Header';
 import { useState } from 'react';
 
 const INITIAL_CONFIG = {
@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="App">
 
-      <ButtonContainer
+      <Header
         onChange={handleButtonClicked}
         {...config}
         buttonClicked={buttonClicked} />
