@@ -20,6 +20,7 @@ class Board extends React.Component {
         this.timerID = false;
         this.queue = [];
         this.size = this.props.size;
+        this.cols = this.props.size * 2;
         this.speed = MAX_DELAY - this.props.speed;
     }
 
@@ -49,6 +50,9 @@ class Board extends React.Component {
             if (this.props.buttonClicked === 'RESET') {
                 console.log("Reset Clicked");
                 this.resetMaze(this.size);
+            }
+            if (this.props.buttonClicked === 'SOLVE') {
+                console.log("Solve Clicked");
             }
         }
 
@@ -96,6 +100,7 @@ class Board extends React.Component {
     resetMaze(size) {
         let tempBoard = [];
         this.size = size;
+        this.cols = size * 2;
         this.queue = [];
 
         // Reset iteration variables
@@ -104,12 +109,12 @@ class Board extends React.Component {
         // Update the size formatting of each square
         this.updateSizeFormatting()
 
-        // Iterate through 10 rows
+        // Iterate through  rows
         for (let row = 0; row < size; row++) {
             tempBoard.push([]);
 
             // Add 10 columns per row
-            for (let col = 0; col < size; col++) {
+            for (let col = 0; col < this.cols; col++) {
                 let id = row + ',' + col;
                 tempBoard[row].push({
                     'id': id,
@@ -134,6 +139,9 @@ class Board extends React.Component {
         );
     }
 
+    /* ---- Logic for Solving Maze w/ Dijkstra's Algorithm ---- */
+
+
     /* ---- Logic for Generating Maze (Backtracking algorithm) --- */
 
     carve_passages_from(x, y) {
@@ -144,7 +152,7 @@ class Board extends React.Component {
             let newX = x + this.DROW[direction];
             let newY = y + this.DCOL[direction];
 
-            if ((newY >= 0 && newY < this.size) && (newX >= 0 && newX < this.size) && !this.getIsVisited(newX, newY)) {
+            if ((newY >= 0 && newY < this.cols) && (newX >= 0 && newX < this.size) && !this.getIsVisited(newX, newY)) {
                 this.carve_wall(x, y, direction);
                 this.carve_wall(newX, newY, this.OPPOSITE[direction]);
                 //console.log('---------');
@@ -235,7 +243,7 @@ class Board extends React.Component {
             let newX = x + this.DROW[direction];
             let newY = y + this.DCOL[direction];
 
-            if ((newY >= 0 && newY < this.size) && (newX >= 0 && newX < this.size) && !this.get_is_visited(newX, newY)) {
+            if ((newY >= 0 && newY < this.cols) && (newX >= 0 && newX < this.size) && !this.get_is_visited(newX, newY)) {
                 neighbors.push({ 'x': newX, 'y': newY, 'direction': direction });
             }
         }

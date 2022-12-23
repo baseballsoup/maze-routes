@@ -1,7 +1,7 @@
 import React from "react";
 import { MAX_DELAY } from "./constants";
 
-class ButtonContainer extends React.Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -14,6 +14,10 @@ class ButtonContainer extends React.Component {
         this.props.onChange(['button', 'RUN']);
     }
 
+    handleSolveClicked = () => {
+        this.props.onChange(['button', 'SOLVE']);
+    }
+
     handleSpeedChange = (event) => {
         this.props.onChange(['speed', event.target.value]);
     }
@@ -24,13 +28,8 @@ class ButtonContainer extends React.Component {
 
     render() {
         return (
-            <div className="controls-container">
-                <div className="flex-row">
-                    <label className="label">Generate Maze</label>
-                </div>
-                <div className="flex-row">
-                    <label className="label">Solve Maze</label>
-                </div>
+            <header className="App-header">
+                <h1 className='App-title'>A(Maze) Me</h1>
                 <div className="flex-row">
                     <label className="label" htmlFor="size-slider">Size:</label>
                     <input
@@ -50,24 +49,28 @@ class ButtonContainer extends React.Component {
                         type="range"
                         min="0"
                         max={MAX_DELAY}
-                        step="10"
+                        step="5"
                         value={this.props.speed}
                         onChange={this.handleSpeedChange}
                     />
                 </div>
                 <div className="flex-row">
-                    <div className="col-span-2">
-                        <button className="button" onClick={this.handleResetClicked}>Reset</button>
-                    </div>
-                    <div className="col-span-2">
-                        <button className="button" onClick={this.handleRunClicked}>Run</button>
-                    </div>
+                    <button className="button" onClick={this.handleResetClicked}>Reset</button>
                 </div>
-            </div>
+
+                <div className="flex-row">
+                    <button className="button" onClick={this.handleRunClicked}>Generate Maze</button>
+                </div>
+
+                <div className="flex-row">
+                    <button className="button" onClick={this.handleSolveClicked}>Visualize</button>
+                </div>
+            </header >
+
 
 
         );
     }
 }
 
-export default ButtonContainer;
+export default Header;

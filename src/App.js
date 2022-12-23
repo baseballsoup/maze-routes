@@ -1,7 +1,7 @@
 import './App.css';
 
 import Board from './Components/Board';
-import ButtonContainer from './Components/ButtonContainer';
+import ButtonContainer from './Components/Header';
 import { useState } from 'react';
 
 const INITIAL_CONFIG = {
@@ -35,28 +35,20 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1 className='App-title'>Mazes and Mazes</h1>
-      </header>
+
+      <ButtonContainer
+        onChange={handleButtonClicked}
+        {...config}
+        buttonClicked={buttonClicked} />
+
 
       <div className='main-container'>
-        <br></br>
 
-        <div className='col-span-2 left'>
-          <Board
-            onChange={handleButtonClicked}
-            {...config}
-            buttonClicked={buttonClicked} />
-        </div>
-        <div className='col-span-2 right'>
-          <ButtonContainer
-            onChange={handleButtonClicked}
-            {...config}
-            buttonClicked={buttonClicked} />
-        </div>
+        <Board
+          onChange={handleButtonClicked}
+          {...config}
+          buttonClicked={buttonClicked} />
 
-
-        <br></br>
       </div>
 
     </div>
